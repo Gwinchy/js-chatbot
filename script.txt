@@ -1,0 +1,54 @@
+// Define the chatbot responses
+const responses = {
+    "hello": "Hi there! How can I assist you today?",
+    "how are you": "I'm just a bot, but thanks for asking!",
+    "bye": "Goodbye! Have a great day!"
+};
+
+// Function to send user message and get bot response
+function sendMessage() {
+    // Get user input
+    const userInput = document.getElementById("user-input").value.trim();
+    if (userInput === "") return; // If empty message, do nothing
+
+    // Display user message
+    displayMessage(userInput, true);
+
+    // Get bot response
+    const botResponse = getBotResponse(userInput);
+
+    // Display bot response after a short delay (simulating bot typing)
+    setTimeout(() => {
+        displayMessage(botResponse, false);
+    }, 500);
+    
+    // Clear input field
+    document.getElementById("user-input").value = "";
+}
+
+// Function to get bot response
+function getBotResponse(userInput) {
+    // Convert user input to lowercase
+    const input = userInput.toLowerCase();
+
+    // Check if input matches any predefined responses
+    for (const key in responses) {
+        if (input.includes(key)) {
+            return responses[key];
+        }
+    }
+
+    // If no predefined response found, return a default response
+    return "I'm sorry, I didn't understand that.";
+}
+
+// Function to display messages in the chat box
+function displayMessage(message, isUser) {
+    const chatBox = document.getElementById("chat-box");
+    const messageElement = document.createElement("div");
+    messageElement.classList.add(isUser ? "user-message" : "bot-message");
+    messageElement.innerText = message;
+    chatBox.appendChild(messageElement);
+    // Scroll to the bottom of the chat box
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
